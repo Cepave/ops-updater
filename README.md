@@ -67,3 +67,4 @@ nohup ./ops-updater --interval=300 --debug=false --server=127.0.0.1:2200 &> ops-
 - updater访问ops-mata不能太集中，故而要加一个随机数，可以使用hostname+timestamp作为随机数种子
 - 如果updater正在执行一些命令，结果被kill，下次重启的时候如何保证agent目录干净？tarball解压完成之后要删掉，这将作为解压是否成功的标志，如果发现某个agent目录里还有一个tarball，重新解压缩
 - updater只升级agent就可以了，事情做得少才不容易出错
+- updater可能依赖一些Linux工具才能正常启动，比如tar、md5sum等，在启动之前要做验证，如果没有，退出
