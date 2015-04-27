@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"gitcafe.com/ops/updater/cron"
 	"gitcafe.com/ops/updater/g"
 	"gitcafe.com/ops/updater/http"
 	"os"
@@ -19,8 +20,10 @@ func main() {
 	}
 
 	g.ParseConfig(*cfg)
+	g.InitGlobalVariables()
 
 	go http.Start()
+	go cron.Heartbeat()
 
 	select {}
 }

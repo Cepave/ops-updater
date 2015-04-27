@@ -14,6 +14,7 @@ type HttpConfig struct {
 
 type GlobalConfig struct {
 	Debug    bool        `json:"debug"`
+	Hostname string      `json:"hostname"`
 	Server   string      `json:"server"`
 	Interval int         `json:"interval"`
 	Http     *HttpConfig `json:"http"`
