@@ -4,7 +4,7 @@ updater只有一个功能，就是升级其他业务系统的agent。
 
 ## 功能描述
 
-每隔指定周期（启动的时候通过命令行传入）调用一下ops-meta的http接口，上报当前管理的各个agent的版本号，比如：
+每隔指定周期（配置文件中的interval，单位是秒）调用一下ops-meta的http接口，上报当前管理的各个agent的状态和版本号，比如：
 
 ```
 [
@@ -21,7 +21,7 @@ updater只有一个功能，就是升级其他业务系统的agent。
 ]
 ```
 
-response中顺便带回服务端配置的meta信息，也就是各个agent的版本号、状态、tarball地址等等，比如
+response中顺便带回服务端配置的meta信息，也就是各个agent的版本号、tarball地址、要求的操作等等，比如
 
 ```
 [
@@ -44,7 +44,7 @@ response中顺便带回服务端配置的meta信息，也就是各个agent的版
 
 updater将这个信息与自我内存中的信息做对比，该升级的升级，该启动的启动，该停止的停止。sorry，不能与内存中的信息做对比，应该直接去各个agent目录调用control脚本查看，因为agent有可能crash，或者做了一些手工操作，这将导致updater内存中的信息并不能实时反应线上情况
 
-此处tarball和md5的配置并不是一个全路径（类似这样： http://11.11.11.11:8888/falcon/falcon-agent-1.0.0.tar.gz ），只是一部分路径，因为我们已经知道name和version了，就可以拼接出全路径了，算是一种规范化吧
+此处tarball和md5的配置并不是一个全路径（类似这样： http://11.11.11.11:8888/falcon/falcon-agent-1.0.0.tar.gz ），只是一部分路径，因为我们已经知道name和version了，就可以拼接出全路径了，算是一种规范化吧，拼接规范是：`{$tarball}/{$name}-{$version}.tar.gz`
 
 ## 目录结构
 
@@ -74,7 +74,7 @@ updater将这个信息与自我内存中的信息做对比，该升级的升级�
 ## 启停
 
 ```
-./control start|stop|restart
+./control start|stop|restart|tail
 ```
 
 配置文件是cfg.json，我们提供了cfg.example.json作为配置模板，`mv cfg.example.json cfg.json`，然后修改成合适的配置
