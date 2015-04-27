@@ -22,6 +22,8 @@ func main() {
 	g.ParseConfig(*cfg)
 	g.InitGlobalVariables()
 
+	// 检查一下依赖的md5sum等命令是否OK
+
 	go http.Start()
 	go cron.Heartbeat()
 

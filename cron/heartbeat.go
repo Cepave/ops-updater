@@ -12,6 +12,7 @@ import (
 )
 
 func Heartbeat() {
+	// 产生一个随机时间
 	for {
 		heartbeat()
 		d := time.Duration(g.Config().Interval) * time.Second
@@ -32,7 +33,8 @@ func heartbeat() {
 
 	heartbeatRequest := BuildHeartbeatRequest(hostname, agentDirs)
 	if g.Config().Debug {
-		log.Println("====>>>>", heartbeatRequest)
+		log.Println("====>>>>")
+		log.Println(heartbeatRequest)
 	}
 
 	bs, err := json.Marshal(heartbeatRequest)
@@ -58,7 +60,8 @@ func heartbeat() {
 	}
 
 	if g.Config().Debug {
-		log.Println("<<<<====", heartbeatResponse)
+		log.Println("<<<<====")
+		log.Println(heartbeatResponse)
 	}
 
 	HandleHeartbeatResponse(&heartbeatResponse)
