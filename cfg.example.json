@@ -1,0 +1,9 @@
+{
+    "debug": true,
+    "server": "127.0.0.1:2000",
+    "interval": 300,
+    "http": {
+        "enabled": true,
+        "listen": "0.0.0.0:2001"
+    }
+}

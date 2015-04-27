@@ -20,3 +20,15 @@ _cgo_export.*
 _testmain.go
 
 *.exe
+
+*.sw[op]
+/cfg.json
+/var
+/log
+/tmp
+/.idea
+*.iml
+*.log
+/ops-updater*
+/updater*
+

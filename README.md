@@ -71,13 +71,13 @@ updater将这个信息与自我内存中的信息做对比，该升级的升级�
 
 `.version`文件是当前这个agent应该使用的版本
 
-## 启动参数
+## 启停
 
 ```
-nohup ./ops-updater --interval=300 --debug=false --server=127.0.0.1:2200 &> ops-updater.log &
+./control start|stop|restart
 ```
 
-以上启动参数通常都可以不用加，采用默认值即可，当然，`--server`一般还是要加的，配置成ops-meta的地址
+配置文件是cfg.json，我们提供了cfg.example.json作为配置模板，`mv cfg.example.json cfg.json`，然后修改成合适的配置
 
 ## 设计注意点
 
