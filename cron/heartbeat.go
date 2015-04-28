@@ -12,7 +12,7 @@ import (
 )
 
 func Heartbeat() {
-	// 产生一个随机时间
+	SleepRandomDuration()
 	for {
 		heartbeat()
 		d := time.Duration(g.Config().Interval) * time.Second
