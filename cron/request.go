@@ -1,7 +1,6 @@
 package cron
 
 import (
-	"bytes"
 	"fmt"
 	"gitcafe.com/ops/common/model"
 	"gitcafe.com/ops/updater/g"
@@ -38,18 +37,15 @@ func BuildHeartbeatRequest(hostname string, agentDirs []string) model.HeartbeatR
 			continue
 		}
 
-		status := ""
-
 		cmd := exec.Command("./control", "status")
 		cmd.Dir = path.Join(g.SelfDir, agentDir, version)
+		bs, err := cmd.CombinedOutput()
 
-		var stdout bytes.Buffer
-		cmd.Stdout = &stdout
-		err = cmd.Run()
+		status := ""
 		if err != nil {
 			status = fmt.Sprintf("exec `./control status` fail: %s", err)
 		} else {
-			status = strings.TrimSpace(stdout.String())
+			strings.TrimSpace(string(bs))
 		}
 
 		realAgent := &model.RealAgent{
