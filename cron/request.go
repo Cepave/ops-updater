@@ -26,13 +26,11 @@ func BuildHeartbeatRequest(hostname string, agentDirs []string) model.HeartbeatR
 			continue
 		}
 
-		version, err := f.ToString(versionFile)
+		version, err := f.ToTrimString(versionFile)
 		if err != nil {
 			log.Printf("read %s/.version fail: %v", agentDir, err)
 			continue
 		}
-
-		version = strings.TrimSpace(version)
 
 		controlFile := path.Join(g.SelfDir, agentDir, version, "control")
 		if !f.IsExist(controlFile) {
