@@ -6,6 +6,8 @@ import (
 	"gitcafe.com/ops/updater/cron"
 	"gitcafe.com/ops/updater/g"
 	"gitcafe.com/ops/updater/http"
+	"github.com/toolkits/sys"
+	"log"
 	"os"
 )
 
@@ -22,10 +24,27 @@ func main() {
 	g.ParseConfig(*cfg)
 	g.InitGlobalVariables()
 
-	// 检查一下依赖的md5sum等命令是否OK
+	CheckDependency()
 
 	go http.Start()
 	go cron.Heartbeat()
 
 	select {}
+}
+
+func CheckDependency() {
+	_, err := sys.CmdOut("wget", "--help")
+	if err != nil {
+		log.Fatalln("dependency wget not found")
+	}
+
+	_, err = sys.CmdOut("md5sum", "--help")
+	if err != nil {
+		log.Fatalln("dependency md5sum not found")
+	}
+
+	_, err = sys.CmdOut("tar", "--help")
+	if err != nil {
+		log.Fatalln("dependency tar not found")
+	}
 }

@@ -21,6 +21,10 @@ func StartDesiredAgent(da *model.DesiredAgent) {
 		return
 	}
 
+	if err := Untar(da); err != nil {
+		return
+	}
+
 	if err := StopAgentOf(da.Name); err != nil {
 		return
 	}
@@ -30,6 +34,18 @@ func StartDesiredAgent(da *model.DesiredAgent) {
 	}
 
 	file.WriteString(path.Join(da.AgentDir, ".version"), da.Version)
+}
+
+func Untar(da *model.DesiredAgent) error {
+	cmd := exec.Command("tar", "zxf", da.TarballFilename)
+	cmd.Dir = da.AgentVersionDir
+	err := cmd.Run()
+	if err != nil {
+		log.Println("tar zxf", da.TarballFilename, "fail", err)
+		return err
+	}
+
+	return nil
 }
 
 func ControlStartIn(workdir string) error {
