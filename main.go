@@ -21,7 +21,10 @@ func main() {
 		os.Exit(0)
 	}
 
-	g.ParseConfig(*cfg)
+	if err := g.ParseConfig(*cfg); err != nil {
+		log.Fatalln(err)
+	}
+
 	g.InitGlobalVariables()
 
 	CheckDependency()
