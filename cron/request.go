@@ -45,7 +45,7 @@ func BuildHeartbeatRequest(hostname string, agentDirs []string) model.HeartbeatR
 		if err != nil {
 			status = fmt.Sprintf("exec `./control status` fail: %s", err)
 		} else {
-			strings.TrimSpace(string(bs))
+			status = strings.TrimSpace(string(bs))
 		}
 
 		realAgent := &model.RealAgent{
