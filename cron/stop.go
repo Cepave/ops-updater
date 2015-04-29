@@ -18,7 +18,7 @@ func StopDesiredAgent(da *model.DesiredAgent) {
 	ControlStopIn(da.AgentVersionDir)
 }
 
-func StopAgentOf(agentName string) error {
+func StopAgentOf(agentName, newVersion string) error {
 	agentDir := path.Join(g.SelfDir, agentName)
 	versionFile := path.Join(agentDir, ".version")
 
@@ -30,6 +30,11 @@ func StopAgentOf(agentName string) error {
 	version, err := file.ToTrimString(versionFile)
 	if err != nil {
 		log.Printf("WARN: read %s fail %s", version, err)
+		return nil
+	}
+
+	if version == newVersion {
+		// do nothing
 		return nil
 	}
 

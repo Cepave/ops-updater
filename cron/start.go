@@ -25,7 +25,7 @@ func StartDesiredAgent(da *model.DesiredAgent) {
 		return
 	}
 
-	if err := StopAgentOf(da.Name); err != nil {
+	if err := StopAgentOf(da.Name, da.Version); err != nil {
 		return
 	}
 
