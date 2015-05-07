@@ -28,6 +28,8 @@ func HandleDesiredAgent(da *model.DesiredAgent) {
 		StartDesiredAgent(da)
 	} else if da.Cmd == "stop" {
 		StopDesiredAgent(da)
+	} else if da.Cmd == "none" || da.Cmd == "nil" || da.Cmd == "" {
+		// do nothing
 	} else {
 		log.Println("unknown cmd", da)
 	}
