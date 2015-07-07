@@ -1,8 +1,8 @@
 package cron
 
 import (
-	"gitcafe.com/ops/common/model"
-	"gitcafe.com/ops/updater/g"
+	"github.com/Cepave/ops-common/model"
+	"github.com/Cepave/ops-updater/g"
 	"log"
 )
 
