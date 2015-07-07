@@ -53,10 +53,12 @@ func Start() {
 	if addr == "" {
 		return
 	}
-	s := &http.Server{
-		Addr:           addr,
-		MaxHeaderBytes: 1 << 30,
-	}
+	//s := &http.Server{
+	//	Addr:           addr,
+	//	MaxHeaderBytes: 1 << 30,
+	//}
 	log.Println("http listening", addr)
-	log.Fatalln(s.ListenAndServe())
+	err := http.ListenAndServeTLS(addr, "cert.pem", "key.pem", nil)
+	log.Fatalln(err)
+
 }
