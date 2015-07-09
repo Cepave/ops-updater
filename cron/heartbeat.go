@@ -1,6 +1,7 @@
 package cron
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"github.com/Cepave/ops-common/model"
@@ -44,7 +45,8 @@ func heartbeat() {
 	}
 
 	url := fmt.Sprintf("https://%s/heartbeat", g.Config().Server)
-	httpRequest := httplib.Post(url).SetTimeout(time.Second*10, time.Minute)
+
+	httpRequest := httplib.Post(url).SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true}).SetTimeout(time.Second*10, time.Minute)
 	httpRequest.Body(bs)
 	httpResponse, err := httpRequest.Bytes()
 	if err != nil {
