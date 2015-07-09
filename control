@@ -63,7 +63,7 @@ function tailf() {
 }
 
 function build() {
-    go build
+    go build -a
     if [ $? -ne 0 ]; then
         exit $?
     fi

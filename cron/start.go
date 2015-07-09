@@ -79,19 +79,19 @@ func InsureNewVersionFiles(da *model.DesiredAgent) error {
 	if err != nil {
 		panic(err)
 	}
-	downloadTarballCmd := exec.Command("wget --auth-no-challenge --user=owl --password="+password, "-q", da.TarballUrl, "-O", da.TarballFilename)
+	downloadTarballCmd := exec.Command("wget", "--no-check-certificate", "--auth-no-challenge", "--user=owl", "--password="+password, da.TarballUrl, "-O", da.TarballFilename)
 	downloadTarballCmd.Dir = da.AgentVersionDir
 	err = downloadTarballCmd.Run()
 	if err != nil {
-		log.Println("wget -q", da.TarballUrl, "-O", da.TarballFilename, "fail", err)
+		log.Println("wget -q --no-check-certificate --auth-no-challenge --user=owl --password="+password, da.TarballUrl, "-O", da.TarballFilename, "fail", err)
 		return err
 	}
 
-	downloadMd5Cmd := exec.Command("wget", "-q", da.Md5Url, "-O", da.Md5Filename)
+	downloadMd5Cmd := exec.Command("wget", "--no-check-certificate", "--auth-no-challenge", "--user=owl", "--password="+password, da.Md5Url, "-O", da.Md5Filename)
 	downloadMd5Cmd.Dir = da.AgentVersionDir
 	err = downloadMd5Cmd.Run()
 	if err != nil {
-		log.Println("wget -q", da.Md5Url, "-O", da.Md5Filename, "fail", err)
+		log.Println("wget -q --no-check-certificate --auth-no-challenge --user=owl --password="+password, da.Md5Url, "-O", da.Md5Filename, "fail", err)
 		return err
 	}
 
