@@ -43,7 +43,7 @@ func heartbeat() {
 		return
 	}
 
-	url := fmt.Sprintf("http://%s/heartbeat", g.Config().Server)
+	url := fmt.Sprintf("https://%s/heartbeat", g.Config().Server)
 	httpRequest := httplib.Post(url).SetTimeout(time.Second*10, time.Minute)
 	httpRequest.Body(bs)
 	httpResponse, err := httpRequest.Bytes()

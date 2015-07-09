@@ -5,6 +5,7 @@ import (
 	"github.com/Cepave/ops-common/model"
 	"github.com/Cepave/ops-common/utils"
 	"github.com/toolkits/file"
+	"io/ioutil"
 	"log"
 	"os/exec"
 	"path"
@@ -73,10 +74,14 @@ func InsureNewVersionFiles(da *model.DesiredAgent) error {
 	if FilesReady(da) {
 		return nil
 	}
-
-	downloadTarballCmd := exec.Command("wget", "-q", da.TarballUrl, "-O", da.TarballFilename)
+	content, err := ioutil.ReadFile("./password")
+	password := strings.Trim(string(content), "\n")
+	if err != nil {
+		panic(err)
+	}
+	downloadTarballCmd := exec.Command("wget --auth-no-challenge --user=owl --password="+password, "-q", da.TarballUrl, "-O", da.TarballFilename)
 	downloadTarballCmd.Dir = da.AgentVersionDir
-	err := downloadTarballCmd.Run()
+	err = downloadTarballCmd.Run()
 	if err != nil {
 		log.Println("wget -q", da.TarballUrl, "-O", da.TarballFilename, "fail", err)
 		return err
