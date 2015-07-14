@@ -92,7 +92,7 @@ function pid() {
 }
 
 function reload() {
-    curl -s 127.0.0.1:2001/config/reload | python -m json.tool
+    curl --insecure -s https://127.0.0.1:2001/config/reload | python -m json.tool
 }
 
 if [ "$1" == "" ]; then
