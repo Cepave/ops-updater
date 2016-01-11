@@ -3,9 +3,11 @@ package http
 import (
 	"encoding/json"
 	"github.com/Cepave/ops-updater/g"
+	"github.com/kardianos/osext"
 	"log"
 	"net/http"
 	_ "net/http/pprof"
+	"os"
 )
 
 type Dto struct {
@@ -44,6 +46,21 @@ func AutoRender(w http.ResponseWriter, data interface{}, err error) {
 	RenderDataJson(w, data)
 }
 
+var (
+	_            = determineWorkingDirectory()
+	certFilename = "cert.pem"
+	keyFilename  = "key.pem"
+)
+
+func determineWorkingDirectory() string {
+	executablePath, err := osext.ExecutableFolder()
+	if err != nil {
+		log.Fatal("Error: Couldn't determine working directory: " + err.Error())
+	}
+	os.Chdir(executablePath)
+	return ""
+}
+
 func Start() {
 	if !g.Config().Http.Enabled {
 		return
@@ -58,7 +75,7 @@ func Start() {
 	//	MaxHeaderBytes: 1 << 30,
 	//}
 	log.Println("http listening", addr)
-	err := http.ListenAndServeTLS(addr, "cert.pem", "key.pem", nil)
+	err := http.ListenAndServeTLS(addr, certFilename, keyFilename, nil)
 	log.Fatalln(err)
 
 }
