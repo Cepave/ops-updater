@@ -14,11 +14,12 @@ type HttpConfig struct {
 }
 
 type GlobalConfig struct {
-	Debug    bool        `json:"debug"`
-	Hostname string      `json:"hostname"`
-	Server   string      `json:"server"`
-	Interval int         `json:"interval"`
-	Http     *HttpConfig `json:"http"`
+	Debug        bool        `json:"debug"`
+	Hostname     string      `json:"hostname"`
+	DesiredAgent string      `json:"desiredAgent"`
+	Server       string      `json:"server"`
+	Interval     int         `json:"interval"`
+	Http         *HttpConfig `json:"http"`
 }
 
 var (

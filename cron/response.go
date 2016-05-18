@@ -19,7 +19,10 @@ func HandleHeartbeatResponse(respone *model.HeartbeatResponse) {
 
 	for _, da := range das {
 		da.FillAttrs(g.SelfDir)
-		HandleDesiredAgent(da)
+
+		if g.Config().DesiredAgent == "" || g.Config().DesiredAgent == da.Name {
+			HandleDesiredAgent(da)
+		}
 	}
 }
 
